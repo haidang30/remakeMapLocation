@@ -14,7 +14,36 @@
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BbY-tY-Pnx">
                                 <items>
-                                    <barButtonItem title="Item" id="vbK-Wv-Bqa"/>
+                                    <barButtonItem title="Bar" id="vbK-Wv-Bqa">
+                                        <connections>
+                                            <action selector="onToolBarBtnPressed:" destination="2" id="jUX-6S-3dh"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem tag="1" title="Cafe" id="rKt-zD-Ivq">
+                                        <connections>
+                                            <action selector="onToolBarBtnPressed:" destination="2" id="LoY-bd-iCS"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem tag="2" title="Florist" id="oLj-1I-ZXk" userLabel="Bar Button Item - Florist">
+                                        <connections>
+                                            <action selector="onToolBarBtnPressed:" destination="2" id="062-QD-jpw"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem tag="3" title="ATM" id="ywC-gf-2vG" userLabel="Bar Button Item - ATM">
+                                        <connections>
+                                            <action selector="onToolBarBtnPressed:" destination="2" id="eeD-d3-rQG"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem tag="4" title="Park" id="5MZ-6B-6B7" userLabel="Bar Button Item - Park">
+                                        <connections>
+                                            <action selector="onToolBarBtnPressed:" destination="2" id="1YH-MP-Dz8"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem tag="5" title="6" id="Ojm-VJ-tsH" userLabel="Bar Button Item - 6">
+                                        <connections>
+                                            <action selector="onToolBarBtnPressed:" destination="2" id="xJq-2W-SL1"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OfP-Cq-HHm"/>
@@ -38,17 +67,6 @@
             </objects>
         </scene>
     </scenes>
-    <classes>
-        <class className="MLViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MLViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

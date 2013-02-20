@@ -31,13 +31,58 @@
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
 }
 
-- (void)didReceiveMemoryWarning
+-(void) queryGooglePlaces: (NSString *) googleType
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // Build the url string to send to Google.
+    
+    NSString *url = [NSString stringWithFormat:kGoogleAPIRequest, currentCentre.latitude, currentCentre.longitude, [NSString stringWithFormat:@"%i", currenDist], googleType, kGOOGLE_API_KEY];
+    
+    //Formulate the string as a URL object.
+    NSURL *googleRequestURL=[NSURL URLWithString:url];
+    
+    // Retrieve the results of the URL.
+    dispatch_async(kBgQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL: googleRequestURL];
+        [self performSelectorOnMainThread:@selector(fetchedData:)
+                               withObject:data waitUntilDone:YES];
+    });
 }
 
+- (void)fetchedData:(NSData *)responseData {
+    //parse out the json data
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization
+                          JSONObjectWithData:responseData
+                          options:kNilOptions
+                          error:&error];
+    
+    //The results from Google will be an array obtained from the NSDictionary object with the key "results".
+    NSArray* places = [json objectForKey:@"results"];
+    
+    //Write out the data to the console.
+    NSLog(@"Google Data: %@", places);
+    
+    //Plot the data in the places array onto the map with the plotPostions method.
+    [self pinPositions:places];
+}
+
+
+- (IBAction)onToolBarBtnPressed:(id)sender
+{
+    UIBarButtonItem *button = (UIBarButtonItem *)sender;
+    NSString *buttonTitle = [button.title lowercaseString];
+    
+    [self queryGooglePlaces:buttonTitle];
+}
+
+//- (void)didReceiveMemoryWarning
+//{
+//    [super didReceiveMemoryWarning];
+//    // Dispose of any resources that can be recreated.
+//}
+
 #pragma mark - MKMapViewDelegate methods.
+
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
     MKCoordinateRegion region;
@@ -57,6 +102,36 @@
     currenDist = MKMetersBetweenMapPoints(eastMapPoint, westMapPoint);
     //Set current center point
     currentCentre = self.mapView.centerCoordinate;
+}
+
+- (void)pinPositions:(NSArray *)data
+{
+    for (id<MKAnnotation> annotation in self.mapView.annotations)
+    {
+        if ([annotation isKindOfClass:[MLMapPoint class]])
+        {
+            [self.mapView removeAnnotation:annotation];
+        }
+    }
+    
+    for (int i = 0; i < [data count]; i++)
+    {
+        NSDictionary *place     = [data objectAtIndex:i];
+        NSDictionary *geo       = [place objectForKey:@"geometry"];
+        NSDictionary *loc       = [geo objectForKey:@"location"];
+        NSString     *name      = [place objectForKey:@"name"];
+        NSString     *vicinity  = [place objectForKey:@"vicinity"];
+        
+        CLLocationCoordinate2D placeCoord;
+        placeCoord.latitude     = [[loc objectForKey:@"lat"] doubleValue];
+        placeCoord.longitude    = [[loc objectForKey:@"lng"] doubleValue];
+        
+        MLMapPoint *placeObject = [[MLMapPoint alloc] initWithName:name
+                                                           address:vicinity
+                                                        coordinate:placeCoord];
+        
+        [self.mapView addAnnotation:placeObject];
+    }
 }
 
 #pragma mark - Helpers functions

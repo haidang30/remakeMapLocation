@@ -8,8 +8,6 @@
 
 #import "MLMapPoint.h"
 
-//@property (strong, nonatomic) NSMutableArray *results;
-//@property (strong, nonatomic) NSMutableArray *persons;
 @implementation MLMapPoint
 
 - (id)initWithName:(NSString *)name address:(NSString *)address coordinate:(CLLocationCoordinate2D)coordinate
@@ -38,19 +36,19 @@
     return _address;
 }
 
-- (id)initWithDictionary:(NSDictionary *)locationDictionary
-{
-    self = [super init];
-    
-    if (self)
-    {
-        self.name           = [locationDictionary objectForKey:@"name"];
-        self.address        = [locationDictionary objectForKey:@"address"];
-        self.description    = [locationDictionary objectForKey:@"description"];
-//        self.coordinate     = (__bridge CLLocationCoordinate2D *)([locationDictionary objectForKey:@"coordinate"]);
-//        self.coordinate     = [locationDictionary objectForKey:@"coordinate"];
-    }
-    return self;
-}
+//- (id)initWithDictionary:(NSDictionary *)locationDictionary
+//{
+//    self = [super init];
+//    
+//    if (self)
+//    {
+//        self.name           = [locationDictionary objectForKey:@"name"];
+//        self.address        = [locationDictionary objectForKey:@"address"];
+//        self.description    = [locationDictionary objectForKey:@"description"];
+////        self.coordinate     = (__bridge CLLocationCoordinate2D *)([locationDictionary objectForKey:@"coordinate"]);
+////        self.coordinate     = [locationDictionary objectForKey:@"coordinate"];
+//    }
+//    return self;
+//}
 
 @end

@@ -13,6 +13,7 @@
     CLLocationManager *locationManager;
     CLLocationCoordinate2D currentCentre;
     int currenDist;
+    BOOL firstLaunch;
 }
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 

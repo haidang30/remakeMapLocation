@@ -46,44 +46,44 @@
     
     return self;
 }
-- (void)globalTimelineContactsWithBlock:(void (^)(NSMutableArray *results, NSError *error))block {
-    
-    [self getPath:kLocationAPIPath parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id response) {
-              
-              NSMutableArray *locations = [NSMutableArray arrayWithCapacity:[response count]];
-              
-              for (id obj in response)
-              {
-                  if ([obj isKindOfClass:[NSDictionary class]])
-                  {
-                      MLMapPoint *point = [[MLMapPoint alloc] initWithDictionary:(NSDictionary *)obj];
-                      [locations addObject:point];
-                  }
-              }
-              
-              self.allLocations = locations;
-              
-              if (block) {
-                  block(locations, nil);
-              }
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              if (block) {
-                  block([NSMutableArray array], error);
-              }
-          }];
-}
-
-- (void)saveLocationArray
-{
-    for (MLMapPoint *point in self.allLocations)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:point forKey:point.locationID];
-    }
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+//- (void)globalTimelineContactsWithBlock:(void (^)(NSMutableArray *results, NSError *error))block {
+//    
+//    [self getPath:kLocationAPIPath parameters:nil
+//          success:^(AFHTTPRequestOperation *operation, id response) {
+//              
+//              NSMutableArray *locations = [NSMutableArray arrayWithCapacity:[response count]];
+//              
+//              for (id obj in response)
+//              {
+//                  if ([obj isKindOfClass:[NSDictionary class]])
+//                  {
+//                      MLMapPoint *point = [[MLMapPoint alloc] initWithDictionary:(NSDictionary *)obj];
+//                      [locations addObject:point];
+//                  }
+//              }
+//              
+//              self.allLocations = locations;
+//              
+//              if (block) {
+//                  block(locations, nil);
+//              }
+//          }
+//          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//              if (block) {
+//                  block([NSMutableArray array], error);
+//              }
+//          }];
+//}
+//
+//- (void)saveLocationArray
+//{
+//    for (MLMapPoint *point in self.allLocations)
+//    {
+//        [[NSUserDefaults standardUserDefaults] setObject:point forKey:point.locationID];
+//    }
+//    
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//}
 
 //- (void)loadLocationArray
 //{
