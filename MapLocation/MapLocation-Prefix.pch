@@ -9,6 +9,23 @@
 #endif
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
+//Native Libraries
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+
+//3rd libraries
+#import "AFNetworking.h"
+
+
+//define value
+#define latDistance                     1000
+#define longDistance                    1000
+#define kLocationAPIBaseURLString       @"https://dl.dropbox.com/"
+#define kLocationAPIPath                @"u/11295402/locations.json"
+#define kLocationAPIToken               @""
+
+
 #endif
+

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MLViewController : UIViewController
+@interface MLViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate>
+{
+    CLLocationManager *locationManager;
+}
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
