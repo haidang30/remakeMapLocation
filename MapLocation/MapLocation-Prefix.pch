@@ -18,6 +18,9 @@
 //3rd libraries
 #import "AFNetworking.h"
 
+//class
+#import "MLMapPoint.h"
+#import "MLPointClient.h"
 
 //define value
 #define latDistance                     1000

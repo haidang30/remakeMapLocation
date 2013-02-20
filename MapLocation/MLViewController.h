@@ -11,6 +11,8 @@
 @interface MLViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate>
 {
     CLLocationManager *locationManager;
+    CLLocationCoordinate2D currentCentre;
+    int currenDist;
 }
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 

@@ -9,7 +9,7 @@
 #import "MLViewController.h"
 
 @interface MLViewController ()
-
+@property (strong, nonatomic) NSMutableArray *results;
 @end
 
 @implementation MLViewController
@@ -45,5 +45,50 @@
     
     [mapView setRegion:region animated:YES];
 }
+
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    //set east and west points for calculate zoom level
+    MKMapRect mRect = self.mapView.visibleMapRect;
+    MKMapPoint eastMapPoint = MKMapPointMake(MKMapRectGetMinX(mRect), MKMapRectGetMidY(mRect));
+    MKMapPoint westMapPoint = MKMapPointMake(MKMapRectGetMaxX(mRect), MKMapRectGetMidY(mRect));
+    
+    //Set current distance
+    currenDist = MKMetersBetweenMapPoints(eastMapPoint, westMapPoint);
+    //Set current center point
+    currentCentre = self.mapView.centerCoordinate;
+}
+
+#pragma mark - Helpers functions
+
+
+//
+//- (void)loadDataFromServer
+//{
+//    __weak MLViewController *weakSelf = self;
+//
+//    [[MLPointClient sharedInstance] globalTimelineContactsWithBlock:^(NSMutableArray *results, NSError *error)
+//     {
+//         if (error)
+//         {
+//             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+//                                         message:[error localizedDescription]
+//                                        delegate:nil
+//                               cancelButtonTitle:nil
+//                               otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
+//         }
+//         else
+//         {
+//             weakSelf.results = results;
+//             weakSelf.tableView.scrollEnabled = YES;
+//             [weakSelf.tableView.pullToRefreshView stopAnimating];
+//         }
+//         
+//         [spinner stopAnimating];
+//         weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
+//         
+//         [self reloadUI];
+//     }];
+//}
 
 @end

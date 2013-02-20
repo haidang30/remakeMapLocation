@@ -17,7 +17,6 @@
 + (id)sharedInstance
 {
     static MLPointClient *__sharedInstance;
-//    static dispatch_once_t onceToken;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         __sharedInstance = [[MLPointClient alloc] initWithBaseURL:[NSURL URLWithString:kLocationAPIBaseURLString]];
@@ -47,32 +46,56 @@
     
     return self;
 }
-//- (void)globalTimelineContactsWithBlock:(void (^)(NSMutableArray *results, NSError *error))block {
+- (void)globalTimelineContactsWithBlock:(void (^)(NSMutableArray *results, NSError *error))block {
+    
+    [self getPath:kLocationAPIPath parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id response) {
+              
+              NSMutableArray *locations = [NSMutableArray arrayWithCapacity:[response count]];
+              
+              for (id obj in response)
+              {
+                  if ([obj isKindOfClass:[NSDictionary class]])
+                  {
+                      MLMapPoint *point = [[MLMapPoint alloc] initWithDictionary:(NSDictionary *)obj];
+                      [locations addObject:point];
+                  }
+              }
+              
+              self.allLocations = locations;
+              
+              if (block) {
+                  block(locations, nil);
+              }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              if (block) {
+                  block([NSMutableArray array], error);
+              }
+          }];
+}
+
+- (void)saveLocationArray
+{
+    for (MLMapPoint *point in self.allLocations)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:point forKey:point.locationID];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+//- (void)loadLocationArray
+//{
+//    for (MLMapPoint *point in self.allLocations)
+//    {
+//        
+//        NSNumber *num = [[NSUserDefaults standardUserDefaults] objectForKey:point.userId];
+//        if (num)
+//            point.likeCount = num;
+//    }
 //    
-//    [self getPath:kLocationAPIPath parameters:nil
-//          success:^(AFHTTPRequestOperation *operation, id response) {
-//              
-//              NSMutableArray *locations = [NSMutableArray arrayWithCapacity:[response count]];
-//              
-//              for (id obj in response)
-//              {
-//                  if ([obj isKindOfClass:[NSDictionary class]]) {
-//                      MLMapPoint *point = [[MLMapPoint alloc] initWithDictionary:(NSDictionary *)obj];
-//                      [locations addObject:point];
-//                  }
-//              }
-//              
-//              self.allLocations = point;
-//              
-//              if (block) {
-//                  block(point, nil);
-//              }
-//          }
-//          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//              if (block) {
-//                  block([NSMutableArray array], error);
-//              }
-//          }];
+//    [self updateHighestLikePoint];
 //}
 
 @end

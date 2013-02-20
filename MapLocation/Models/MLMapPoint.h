@@ -9,15 +9,20 @@
 #import <Foundation/Foundation.h>
 
 @interface MLMapPoint : NSObject <MKAnnotation>
-{
-    NSString *_name;
-    NSString *_street;
-//    NSString *_description;
-}
-@property (copy) NSString *name;
-@property (copy) NSString *address;
-//@property (copy) NSString *description;
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+//{
+//    NSString *_name;
+//    NSString *_street;
+////    NSString *_description;
+//}
+//@property (copy) NSString *name;
+//@property (copy) NSString *address;
+////@property (copy) NSString *description;
+//@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic,strong) NSString *locationID;
+@property (nonatomic,strong) NSString *name;
+@property (nonatomic,strong) NSString *address;
+@property (nonatomic,strong) NSString *description;
+@property (nonatomic,readonly) CLLocationCoordinate2D *coordinate;
 
 -(id)initWithName:(NSString*)name
           address:(NSString*)address

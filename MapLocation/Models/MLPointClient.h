@@ -12,4 +12,8 @@
 
 + (id)sharedInstance;
 
+- (void)globalTimelineContactsWithBlock:(void   (^)(NSMutableArray *results, NSError* error))block;
+- (void)saveLocationArray;
+//- (void)loadLocationArray;
+
 @end
