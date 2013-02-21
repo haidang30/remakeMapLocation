@@ -21,19 +21,22 @@
 
 - (id)initWithName:(NSString*)name address:(NSString*)address coordinate:(CLLocationCoordinate2D)coordinate;
 
-//@property (nonatomic,strong) NSString *locationID;
-//@property (nonatomic,strong) NSString *name;
-//@property (nonatomic,strong) NSString *address;
-//@property (nonatomic,strong) NSString *description;
-//@property (nonatomic,readonly) CLLocationCoordinate2D *coordinate;
+//@interface MapPoint : NSObject <MKAnnotation>
+//{
+//    
+//    NSString *_name;
+//    NSString *_address;
+//    CLLocationCoordinate2D _coordinate;
+//    
+//}
 //
-//-(id)initWithName:(NSString*)name
-//          address:(NSString*)address
-//       coordinate:(CLLocationCoordinate2D)coordinate;
+//@property (copy) NSString *name;
+//@property (copy) NSString *address;
+//@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 //
-//- (id)initWithDictionary:(NSDictionary *)locationDictionary;
-
-//- (void)encodeWithCoder:(NSCoder *)aCoder;
-//- (id)initWithCoder:(NSCoder *)aDecoder;
+//
+//- (id)initWithName:(NSString*)name address:(NSString*)address coordinate:(CLLocationCoordinate2D)coordinate;
+//
+//@end
 
 @end

@@ -9,6 +9,9 @@
 #import "MLMapPoint.h"
 
 @implementation MLMapPoint
+//@synthesize name = _name;
+//@synthesize address = _address;
+//@synthesize coordinate = _coordinate;
 
 - (id)initWithName:(NSString *)name address:(NSString *)address coordinate:(CLLocationCoordinate2D)coordinate
 {
@@ -16,7 +19,7 @@
     {
         _name = [name copy];
         _address = [address copy];
-        coordinate = coordinate;
+        _coordinate = coordinate;
     }
     
     return self;
@@ -35,20 +38,5 @@
 {
     return _address;
 }
-
-//- (id)initWithDictionary:(NSDictionary *)locationDictionary
-//{
-//    self = [super init];
-//    
-//    if (self)
-//    {
-//        self.name           = [locationDictionary objectForKey:@"name"];
-//        self.address        = [locationDictionary objectForKey:@"address"];
-//        self.description    = [locationDictionary objectForKey:@"description"];
-////        self.coordinate     = (__bridge CLLocationCoordinate2D *)([locationDictionary objectForKey:@"coordinate"]);
-////        self.coordinate     = [locationDictionary objectForKey:@"coordinate"];
-//    }
-//    return self;
-//}
 
 @end

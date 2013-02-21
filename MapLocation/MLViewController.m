@@ -29,7 +29,11 @@
     //set some parameters for the location object
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    
+    firstLaunch = YES;
 }
+
+#pragma loading data from API
 
 -(void) queryGooglePlaces: (NSString *) googleType
 {
@@ -46,9 +50,12 @@
         [self performSelectorOnMainThread:@selector(fetchedData:)
                                withObject:data waitUntilDone:YES];
     });
+    
+    
 }
 
-- (void)fetchedData:(NSData *)responseData {
+- (void)fetchedData:(NSData *)responseData
+{
     //parse out the json data
     NSError* error;
     NSDictionary* json = [NSJSONSerialization
@@ -66,6 +73,41 @@
     [self pinPositions:places];
 }
 
+- (void)pinPositions:(NSArray *)data
+{
+    for (id<MKAnnotation> annotation in self.mapView.annotations)
+    {
+        if ([annotation isKindOfClass:[MLMapPoint class]])
+        {
+            [self.mapView removeAnnotation:annotation];
+        }
+    }
+    
+    for (int i = 0; i < [data count]; i++)
+    {
+        NSDictionary *place     = [data objectAtIndex:i];
+        NSDictionary *geometry  = [place objectForKey:@"geometry"];
+        
+        NSString     *name      = [place objectForKey:@"name"];
+        NSString     *vicinity  = [place objectForKey:@"vicinity"];
+        
+        NSDictionary *location  = [geometry objectForKey:@"location"];
+        
+        
+        CLLocationCoordinate2D placeCoord;
+        placeCoord.latitude     = [[location objectForKey:@"lat"] doubleValue];
+        placeCoord.longitude    = [[location objectForKey:@"lng"] doubleValue];
+        
+        MLMapPoint *placeObject = [[MLMapPoint alloc] initWithName:name
+                                                           address:vicinity
+                                                        coordinate:placeCoord];
+        
+        [self.mapView addAnnotation:placeObject];
+    }
+}
+
+
+#pragma on Button methods
 
 - (IBAction)onToolBarBtnPressed:(id)sender
 {
@@ -75,6 +117,14 @@
     [self queryGooglePlaces:buttonTitle];
 }
 
+- (void)viewDidUnload
+{
+    [self setMapView:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+}
+
+
 //- (void)didReceiveMemoryWarning
 //{
 //    [super didReceiveMemoryWarning];
@@ -82,11 +132,39 @@
 //}
 
 #pragma mark - MKMapViewDelegate methods.
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    // Define your reuse identifier.
+    static NSString *identifier = @"MapPoint";
+    
+    if ([annotation isKindOfClass:[MLMapPoint class]]) {
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (annotationView == nil) {
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        } else {
+            annotationView.annotation = annotation;
+        }
+        annotationView.enabled = YES;
+        annotationView.canShowCallout = YES;
+        annotationView.animatesDrop = YES;
+        return annotationView;
+    }
+    return nil;
+}
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
+    CLLocationCoordinate2D center = [mapView centerCoordinate];
+    
     MKCoordinateRegion region;
-    region = MKCoordinateRegionMakeWithDistance(locationManager.location.coordinate,latDistance,longDistance);
+    if (firstLaunch)
+    {
+        region = MKCoordinateRegionMakeWithDistance(locationManager.location.coordinate,latDistance,longDistance);
+        firstLaunch = NO;
+    }
+    else
+    {
+        region = MKCoordinateRegionMakeWithDistance(center, currenDist, currenDist);
+    }
     
     [mapView setRegion:region animated:YES];
 }
@@ -104,35 +182,6 @@
     currentCentre = self.mapView.centerCoordinate;
 }
 
-- (void)pinPositions:(NSArray *)data
-{
-    for (id<MKAnnotation> annotation in self.mapView.annotations)
-    {
-        if ([annotation isKindOfClass:[MLMapPoint class]])
-        {
-            [self.mapView removeAnnotation:annotation];
-        }
-    }
-    
-    for (int i = 0; i < [data count]; i++)
-    {
-        NSDictionary *place     = [data objectAtIndex:i];
-        NSDictionary *geo       = [place objectForKey:@"geometry"];
-        NSDictionary *loc       = [geo objectForKey:@"location"];
-        NSString     *name      = [place objectForKey:@"name"];
-        NSString     *vicinity  = [place objectForKey:@"vicinity"];
-        
-        CLLocationCoordinate2D placeCoord;
-        placeCoord.latitude     = [[loc objectForKey:@"lat"] doubleValue];
-        placeCoord.longitude    = [[loc objectForKey:@"lng"] doubleValue];
-        
-        MLMapPoint *placeObject = [[MLMapPoint alloc] initWithName:name
-                                                           address:vicinity
-                                                        coordinate:placeCoord];
-        
-        [self.mapView addAnnotation:placeObject];
-    }
-}
 
 #pragma mark - Helpers functions
 
