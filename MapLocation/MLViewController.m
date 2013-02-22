@@ -17,7 +17,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     
     self.mapView.delegate = self;
     //ensure that your own loaction can be view in the map view
@@ -48,7 +47,8 @@
     dispatch_async(kBgQueue, ^{
         NSData* data = [NSData dataWithContentsOfURL: googleRequestURL];
         [self performSelectorOnMainThread:@selector(fetchedData:)
-                               withObject:data waitUntilDone:YES];
+                               withObject:data
+                            waitUntilDone:YES];
     });
     
     
@@ -62,13 +62,10 @@
                           JSONObjectWithData:responseData
                           options:kNilOptions
                           error:&error];
-    
     //The results from Google will be an array obtained from the NSDictionary object with the key "results".
     NSArray* places = [json objectForKey:@"results"];
-    
     //Write out the data to the console.
     NSLog(@"Google Data: %@", places);
-    
     //Plot the data in the places array onto the map with the plotPostions method.
     [self pinPositions:places];
 }
@@ -87,12 +84,10 @@
     {
         NSDictionary *place     = [data objectAtIndex:i];
         NSDictionary *geometry  = [place objectForKey:@"geometry"];
+        NSDictionary *location  = [geometry objectForKey:@"location"];
         
         NSString     *name      = [place objectForKey:@"name"];
         NSString     *vicinity  = [place objectForKey:@"vicinity"];
-        
-        NSDictionary *location  = [geometry objectForKey:@"location"];
-        
         
         CLLocationCoordinate2D placeCoord;
         placeCoord.latitude     = [[location objectForKey:@"lat"] doubleValue];

@@ -74,28 +74,5 @@
 //              }
 //          }];
 //}
-//
-//- (void)saveLocationArray
-//{
-//    for (MLMapPoint *point in self.allLocations)
-//    {
-//        [[NSUserDefaults standardUserDefaults] setObject:point forKey:point.locationID];
-//    }
-//    
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//}
-
-//- (void)loadLocationArray
-//{
-//    for (MLMapPoint *point in self.allLocations)
-//    {
-//        
-//        NSNumber *num = [[NSUserDefaults standardUserDefaults] objectForKey:point.userId];
-//        if (num)
-//            point.likeCount = num;
-//    }
-//    
-//    [self updateHighestLikePoint];
-//}
 
 @end

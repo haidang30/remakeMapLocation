@@ -31,7 +31,7 @@
 
 //define google api test
 #define kGoogleAPIRequest               @"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=%@&types=%@&sensor=true&key=%@"
-#define kGOOGLE_API_KEY                 @"AIzaSyCizq7QvPED3UkztXhCs1BTqyyFoRWRYWI"
+#define kGOOGLE_API_KEY                 @"AIzaSyAhE_BIcBQYOV9m9GmZCMnKpa4Qnv0ZVBE"
 #define kBgQueue                        dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
 
