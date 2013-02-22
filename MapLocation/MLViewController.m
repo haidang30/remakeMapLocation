@@ -9,10 +9,23 @@
 #import "MLViewController.h"
 
 @interface MLViewController ()
-@property (strong, nonatomic) NSMutableArray *results;
+@property (strong, nonatomic) NSMutableArray *mapAnnotations;
+
+
 @end
 
 @implementation MLViewController
+
++ (CGFloat)annotationPadding;
+{
+    return 10.0f;
+}
+
++ (CGFloat)calloutHeight;
+{
+    return 40.0f;
+}
+
 
 - (void)viewDidLoad
 {
@@ -82,18 +95,18 @@
     
     for (int i = 0; i < [data count]; i++)
     {
-        NSDictionary *place     = [data objectAtIndex:i];
-        NSDictionary *geometry  = [place objectForKey:@"geometry"];
-        NSDictionary *location  = [geometry objectForKey:@"location"];
+        NSDictionary *place     =[data objectAtIndex:i];
+        NSDictionary *geometry  =[place objectForKey:@"geometry"];
+        NSDictionary *location  =[geometry objectForKey:@"location"];
         
-        NSString     *name      = [place objectForKey:@"name"];
-        NSString     *vicinity  = [place objectForKey:@"vicinity"];
+        NSString     *name      =[place objectForKey:@"name"];
+        NSString     *vicinity  =[place objectForKey:@"vicinity"];
         
         CLLocationCoordinate2D placeCoord;
-        placeCoord.latitude     = [[location objectForKey:@"lat"] doubleValue];
-        placeCoord.longitude    = [[location objectForKey:@"lng"] doubleValue];
+        placeCoord.latitude     =[[location objectForKey:@"lat"] doubleValue];
+        placeCoord.longitude    =[[location objectForKey:@"lng"] doubleValue];
         
-        MLMapPoint *placeObject = [[MLMapPoint alloc] initWithName:name
+        MLMapPoint *placeObject =[[MLMapPoint alloc] initWithName:name
                                                            address:vicinity
                                                         coordinate:placeCoord];
         
@@ -127,20 +140,106 @@
 //}
 
 #pragma mark - MKMapViewDelegate methods.
--(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+
+- (void)onBTnShowDetail:(id)sender
+{
+    NSLog(@"show detail");
+}
+
+
+//******* custom pin **********//
+//-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+//{
+//    // Define your reuse identifier.
+//    static NSString *identifier = @"MapPoint";
+//    
+//    if ([annotation isKindOfClass:[MLMapPoint class]])
+//    {
+//        MKPinAnnotationView *annotationView = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+//        if (annotationView == nil)
+//        {
+//            
+////            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+////                                                             reuseIdentifier:identifier];
+//            MKAnnotationView *customAnnotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
+//                                                                                  reuseIdentifier:identifier];
+//            customAnnotationView.canShowCallout = YES;
+//            
+//            UIImage *flagImgae = [UIImage imageNamed:@"flag"];
+//            
+//            //size the indicator
+//            CGRect resizeRect;
+//            resizeRect.size = flagImgae.size;
+//            CGSize maxSize  = CGRectInset(self.view.bounds, [MLViewController annotationPadding], [MLViewController annotationPadding]).size;
+//            maxSize.height -= self.navigationController.navigationBar.frame.size.height + [MLViewController calloutHeight];
+//            if (resizeRect.size.width > maxSize.width)
+//            {
+//                resizeRect.size = CGSizeMake(maxSize.width, resizeRect.size.height / resizeRect.size.width * maxSize.width);
+//            }
+//            if (resizeRect.size.height > maxSize.height)
+//            {
+//                resizeRect.size = CGSizeMake(resizeRect.size.width / resizeRect.size.width * maxSize.width, maxSize.height);
+//            }
+//            
+//            resizeRect.origin = CGPointMake(0.0, 0.0);
+//            UIGraphicsBeginImageContext(resizeRect.size);
+//            [flagImgae drawInRect:resizeRect];
+//            
+//            UIImage *resizeImage = UIGraphicsGetImageFromCurrentImageContext();
+//            UIGraphicsEndImageContext();
+//            
+//            annotationView.image    = resizeImage;
+//            annotationView.opaque   = NO;
+//            
+////            UIImageView *avatarView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+////            annotationView.leftCalloutAccessoryView = avatarView;
+//            
+//            //offset the custom annotation on the map coordinate
+//            annotationView.centerOffset = CGPointMake(annotationView.centerOffset.x + annotationView.image.size.width/2,
+//                                                      annotationView.centerOffset.y - annotationView.image.size.height/2);
+//            
+//            return customAnnotationView;
+//        }
+//        else
+//        {
+//            annotationView.annotation = annotation;
+//        }
+//        annotationView.enabled = YES;
+//        annotationView.canShowCallout = YES;
+//        annotationView.animatesDrop = YES;
+//        
+//        return annotationView;
+//    }
+//    return nil;
+//}
+
+//******** working coding with standard pin
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
     // Define your reuse identifier.
     static NSString *identifier = @"MapPoint";
     
-    if ([annotation isKindOfClass:[MLMapPoint class]]) {
+    if ([annotation isKindOfClass:[MLMapPoint class]])
+    {
         MKPinAnnotationView *annotationView = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (annotationView == nil) {
+        if (annotationView == nil)
+        {
             annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
         } else {
             annotationView.annotation = annotation;
         }
+        annotationView.pinColor = MKPinAnnotationColorGreen;
         annotationView.enabled = YES;
         annotationView.canShowCallout = YES;
         annotationView.animatesDrop = YES;
+        
+        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        [rightButton addTarget:self
+                        action:@selector(onBTnShowDetail:)
+              forControlEvents:UIControlEventTouchUpInside];
+        annotationView.rightCalloutAccessoryView = rightButton;
+        
         return annotationView;
     }
     return nil;

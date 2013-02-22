@@ -31,8 +31,9 @@
 		8D4DBD5016D35EE40017C832 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4DBD4716D35EE40017C832 /* UIImageView+AFNetworking.m */; };
 		8D4DBD6A16D3808E0017C832 /* MLPointClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4DBD6916D3808E0017C832 /* MLPointClient.m */; };
 		8D4DBD7016D38E660017C832 /* MLMapPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4DBD6F16D38E660017C832 /* MLMapPoint.m */; };
-		8D4DBD8116D721DE0017C832 /* MLDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4DBD8016D721DE0017C832 /* MLDetailView.m */; };
-		8D4DBD8516D722CB0017C832 /* MLDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4DBD8416D722CB0017C832 /* MLDetailViewController.m */; };
+		8D4DBD8716D756570017C832 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D4DBD8616D756570017C832 /* flag.png */; };
+		8D4DBD8A16D75AA70017C832 /* MLDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D4DBD8916D75AA70017C832 /* MLDetailView.xib */; };
+		8D4DBD8D16D75F980017C832 /* MLDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4DBD8C16D75F980017C832 /* MLDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,10 +78,10 @@
 		8D4DBD6916D3808E0017C832 /* MLPointClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MLPointClient.m; path = Models/MLPointClient.m; sourceTree = "<group>"; };
 		8D4DBD6E16D38E660017C832 /* MLMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLMapPoint.h; path = Models/MLMapPoint.h; sourceTree = "<group>"; };
 		8D4DBD6F16D38E660017C832 /* MLMapPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MLMapPoint.m; path = Models/MLMapPoint.m; sourceTree = "<group>"; };
-		8D4DBD7F16D721DE0017C832 /* MLDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLDetailView.h; path = Views/MLDetailView.h; sourceTree = "<group>"; };
-		8D4DBD8016D721DE0017C832 /* MLDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MLDetailView.m; path = Views/MLDetailView.m; sourceTree = "<group>"; };
-		8D4DBD8316D722CB0017C832 /* MLDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLDetailViewController.h; sourceTree = "<group>"; };
-		8D4DBD8416D722CB0017C832 /* MLDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLDetailViewController.m; sourceTree = "<group>"; };
+		8D4DBD8616D756570017C832 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
+		8D4DBD8916D75AA70017C832 /* MLDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLDetailView.xib; sourceTree = "<group>"; };
+		8D4DBD8B16D75F980017C832 /* MLDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLDetailViewController.h; path = Views/MLDetailViewController.h; sourceTree = "<group>"; };
+		8D4DBD8C16D75F980017C832 /* MLDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MLDetailViewController.m; path = Views/MLDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,12 +134,14 @@
 		8D4DBD0D16D330B90017C832 /* MapLocation */ = {
 			isa = PBXGroup;
 			children = (
+				8D4DBD6B16D389FC0017C832 /* Managers */,
 				8D4DBD6D16D38B8B0017C832 /* Storyboards */,
 				8D4DBD8216D7225D0017C832 /* Controllers */,
 				8D4DBD6416D376F60017C832 /* Views */,
 				8D4DBD6316D376E90017C832 /* Models */,
 				8D4DBD1616D330B90017C832 /* MLAppDelegate.h */,
 				8D4DBD1716D330B90017C832 /* MLAppDelegate.m */,
+				8D4DBD8816D75A7C0017C832 /* Resources */,
 				8D4DBD0E16D330B90017C832 /* Supporting Files */,
 			);
 			path = MapLocation;
@@ -147,6 +150,7 @@
 		8D4DBD0E16D330B90017C832 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8D4DBD8616D756570017C832 /* flag.png */,
 				8D4DBD0F16D330B90017C832 /* MapLocation-Info.plist */,
 				8D4DBD1016D330B90017C832 /* InfoPlist.strings */,
 				8D4DBD1316D330B90017C832 /* main.m */,
@@ -220,7 +224,6 @@
 		8D4DBD6316D376E90017C832 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8D4DBD6B16D389FC0017C832 /* Managers */,
 				8D4DBD6E16D38E660017C832 /* MLMapPoint.h */,
 				8D4DBD6F16D38E660017C832 /* MLMapPoint.m */,
 			);
@@ -230,8 +233,8 @@
 		8D4DBD6416D376F60017C832 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8D4DBD7F16D721DE0017C832 /* MLDetailView.h */,
-				8D4DBD8016D721DE0017C832 /* MLDetailView.m */,
+				8D4DBD8B16D75F980017C832 /* MLDetailViewController.h */,
+				8D4DBD8C16D75F980017C832 /* MLDetailViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -258,10 +261,16 @@
 			children = (
 				8D4DBD2216D330B90017C832 /* MLViewController.h */,
 				8D4DBD2316D330B90017C832 /* MLViewController.m */,
-				8D4DBD8316D722CB0017C832 /* MLDetailViewController.h */,
-				8D4DBD8416D722CB0017C832 /* MLDetailViewController.m */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8D4DBD8816D75A7C0017C832 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D4DBD8916D75AA70017C832 /* MLDetailView.xib */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,6 +330,8 @@
 				8D4DBD1C16D330B90017C832 /* Default@2x.png in Resources */,
 				8D4DBD1E16D330B90017C832 /* Default-568h@2x.png in Resources */,
 				8D4DBD2116D330B90017C832 /* MainStoryboard.storyboard in Resources */,
+				8D4DBD8716D756570017C832 /* flag.png in Resources */,
+				8D4DBD8A16D75AA70017C832 /* MLDetailView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,8 +356,7 @@
 				8D4DBD5016D35EE40017C832 /* UIImageView+AFNetworking.m in Sources */,
 				8D4DBD6A16D3808E0017C832 /* MLPointClient.m in Sources */,
 				8D4DBD7016D38E660017C832 /* MLMapPoint.m in Sources */,
-				8D4DBD8116D721DE0017C832 /* MLDetailView.m in Sources */,
-				8D4DBD8516D722CB0017C832 /* MLDetailViewController.m in Sources */,
+				8D4DBD8D16D75F980017C832 /* MLDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
